@@ -6,5 +6,6 @@
         "deque": "cpp",
         "forward_list": "cpp",
         "list": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }
