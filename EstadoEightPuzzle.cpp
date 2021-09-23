@@ -98,7 +98,7 @@ void EstadoEightPuzzle::llenar(){
 
 
 void EstadoEightPuzzle::llenarAleatorio(){
-  char randomizer [] = {'0','2','3','4','5','6','7','8','9'};
+  char randomizer [] = {'0','1','2','3','4','5','6','7','8'};
   srand(time(0));
   int pos = 0;
   random_shuffle(begin(randomizer), end(randomizer));
