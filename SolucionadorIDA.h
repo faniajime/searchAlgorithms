@@ -14,12 +14,17 @@ class Nodo{
 class SolucionadorIDA : public Solucionador {
    private:
     int profundidad;
+    int maxProfundidad;
+    int height;
 
    public:
       SolucionadorIDA();
       Solucion * solucione(Problema *);
       Solucion * solucioneRec(Estado * estado, int profundidad, Solucion * solucion);
       int fcost(Problema * problema, Estado * estado, int nodos);
+      int buscar(Nodo * n, Problema * p, int profundidad);
+      Lista * getSolucion(Nodo * n);
+      Solucion * getSolucion(Nodo * n);
 };
 
 

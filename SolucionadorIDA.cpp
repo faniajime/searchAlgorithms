@@ -8,62 +8,65 @@
 using namespace std;
 
 SolucionadorIDA::SolucionadorIDA(){
-    profundidad = 0;
-    maxProfundidad=0;
+    height = 0;
+    maxProfundidad = 1;
 }
 
 Solucion * SolucionadorIDA::solucione( Problema * problema){
     Lista * pasos = new Lista();
-    Lista * frontera = new Lista();
-    Lista * visitados = new Lista();
     Estado* estado = problema->getEstadoInicial();
 
-    profundidad = 0;
+    Nodo * raiz = new Nodo();
+    raiz->estado= estado;
+    raiz->padre = NULL;
+
+    int profundidad = 0;
     bool resuelto = false;
     int nodosVisitados = 0;
-    int fcost = fcost( problema, estado, nodosVisitados);
 
+    maxProfundidad = fcost( problema, raiz->estado, nodosVisitados);
 
-    if(problema->esSolucion(estado)){
-        pasos.append(estado);
-        Solucion * solucion = new Solucion(pasos);
-        return solucion;
+    while(fcost < 100 || !resuelto){
+        int res = buscar(raiz, problema, profundidad);
+        if(res == 1){
+            //final, como encuentro el camino?
+        }else if(res == -1){
+            //calcular nueva profundidad y vamos de nuevo
+        }
+
     }
 
-    while(!resuelto){
-        while(nodosVisitados < fcost){
-            frontera->push_back(estado);
-            if(frontera->isEmpty()){
-                return nullptr;
-            }
-            estado = frontera->pop_front();
-            ++nodosVisitados;
-            visitados->push_back(estado);
-            frontera->push_back(problema->getSiguientes(estado));
-            while(!frontera->isEmpty()){
-                Estado * estadoActual = frontera->pop_front();
-                if(visitados->buscar(estadoActual) == nullptr){
-                    if(problema->esSolucion(estadoActual)){
-                        pasos->push_front(hijo);
-                        return new Solucion(pasos);
-                    }
-                    frontera->push_back(estadoActual);
-                }
-            }
-            Lista::Iterador j = frontera->begin();
-            Lista::Iterador fin = frontera->end();
-            problema->getSiguientes(*j);
+
+}
+
+int SolucionadorIDA::buscar(Nodo * nodo, Problema* problema, int profundidad)) {
+    if(problema->esSolucion(nodo->estado)){
+        return 1;
+    }else if(profundidad>maxProfundidad){
+        return -1;
+    }
+    if (nodo != NULL) {
+        Lista * hijos = new Lista();
+        profundidad+=1;
+        hijos = problema->getSiguientes(nodo->estado);
+        while(!hijos->isEmpty()){
+            buscar(hijos.pop_front(), problema, profundidad);
         }
-        
     }
 }
 
+Solucion * SolucionadorIDA::getSolucion(Nodo * n){
+    Lista * pasos = new Lista();
+    while(n->padre != NULL){
+        pasos.push_front(n->estado);
+        n = n->padre;
+    }
+    Solucion * s = new Solucion(pasos);
+}
 
 
-
-int SolucionadorIDA::fcost(Problema * problema, Estado * estado, int nodos){
-    
-    int funcion = nodos + problema->heuristica(estado);
+int SolucionadorIDA::fcost(Problema * problema, Estado * estado, int profundidad){
+    int funcion = profundidad + problema->heuristica(estado);
     return funcion;
 
 }
