@@ -14,7 +14,8 @@ SolucionadorASTAR::SolucionadorASTAR(){
  //   gScore = 0;
 }
 
-Solucion * SolucionadorASTAR::solucione( Problema * problema){
+void * SolucionadorASTAR::solucione( Problema * problema){
+
     int visitedNodes = 0;
     Estado * estadoInicial;
     Estado * estadoSiguiente;
@@ -81,6 +82,7 @@ Solucion * SolucionadorASTAR::solucione( Problema * problema){
                 }
             }
         }
+        
         // retornarPasos() recursivo;
         // agregarPasos para imprimir
 
@@ -114,10 +116,6 @@ Solucion * SolucionadorASTAR::solucione( Problema * problema){
     */
 
 
-    Estado* estado = problema->getEstadoInicial();
-    profundidad = problema->heuristica(estado) + 
-    bool resuelto = false;
 
 
-}
 
