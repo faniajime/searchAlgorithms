@@ -2,6 +2,7 @@
 #include <random>
 #include <time.h>
 #include <algorithm>
+#include <limits>
 #include <iostream>
 using namespace std;
 
@@ -9,7 +10,11 @@ EstadoEightPuzzle::EstadoEightPuzzle(){
   n = 3;
   pedirMemoria(n);
   llenarAleatorio();
-}
+  gScore = 0;
+  hScore = 0;
+  fScore = numeric_limits<double>::max();
+  padre = nullptr;
+
 
 EstadoEightPuzzle::~EstadoEightPuzzle(){
   if(m){
@@ -79,7 +84,14 @@ void EstadoEightPuzzle::pedirMemoria(int tamanio){
     }
   }
 }
+/*
+void EstadoEightPuzzle::actualizarCosto(){
+  if (padre) {
+    gScore = padre->gScore+1;
 
+  }
+*/
+}
 void EstadoEightPuzzle::liberarMemoria(){
 	for (int f = n-1; f >= 0; --f){
         delete[]m[f];
