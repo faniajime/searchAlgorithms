@@ -35,7 +35,6 @@ Solucion* SolucionadorASTAR::solucione( Problema * problema)
         //cout<<frontera<<endl;
         Lista::Iterador i = frontera->begin();
         Lista::Iterador end = frontera->end();
-        cout<<"1"<<endl;
         for(i; i != end; ++i)
         {
             NodoA * nuevo = new NodoA();
@@ -44,7 +43,6 @@ Solucion* SolucionadorASTAR::solucione( Problema * problema)
             nuevo->nivel = depth;
             unexplored->push_back(nuevo->estado);     
         }
-        cout<<"2"<<endl;
         Lista::Iterador j = unexplored->begin();
         Lista::Iterador unexploredEnd = unexplored->end();
         
@@ -57,7 +55,6 @@ Solucion* SolucionadorASTAR::solucione( Problema * problema)
                 //explored->push_back(unexplored->pop_front());
             }
         }
-        cout<<"3"<<endl;
         explored->push_back(estado);
         //cout<<"Estado: "<<endl;
         //cout<<estado<<endl;
