@@ -14,10 +14,11 @@ class EstadoEightPuzzle : public Estado {
   */
 
    private:
-      char** m;
+      
 	    int n;
 
    public:
+      char** m;
       EstadoEightPuzzle();
       ~EstadoEightPuzzle();
       EstadoEightPuzzle * clonar();

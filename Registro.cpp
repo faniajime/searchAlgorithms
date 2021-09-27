@@ -6,6 +6,7 @@
 #include "EightPuzzleFactory.h"
 #include "SolucionadorAnchoPrimeroFactory.h"
 #include "SolucionadorIDAFactory.h"
+#include "SolucionadorASTARFactory.h"
 // MIEMBRO 2
 #include "Problem06051Factory.h"
 // MIEMBRO 3
@@ -32,7 +33,7 @@ Registro::Registro(){
    this->add("8Puzzle", new EightPuzzleFactory() );
    this->add("Solucionador8Puzzle", new SolucionadorAnchoPrimeroFactory() );
    this->add("SolucionadorIDA", new SolucionadorIDAFactory() );
-
+   
   
    // Registran los del miembro 2 del equipo YY del grupo XX
    // ... agregar lineas aqui

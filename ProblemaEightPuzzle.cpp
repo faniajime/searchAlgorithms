@@ -1,41 +1,27 @@
 #include "ProblemaEightPuzzle.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <iostream>
-#include <math.h>
+
 
 using namespace std;
 
 ProblemaEightPuzzle::ProblemaEightPuzzle(){
   inicial = new EstadoEightPuzzle();
 
-cout << "inicial state"<< endl;
-  inicial->m[0][0] = '1';
-  inicial->m[0][1] = '3';
-  inicial->m[0][2] = '0';
-  inicial->m[1][0] = '6';
-  inicial->m[1][1] = '2';
-  inicial->m[1][2] = '4';
-  inicial->m[2][0] = '8';
-  inicial->m[2][1] = '7';
-  inicial->m[2][2] = '5';
-  cout << inicial <<endl;
-    cout<<endl;
+cout << "inicial state"<< endl; //QUITAR PARA COMPARAR CON LOS OTROS SOLUCIONADORES
+  cout << inicial <<endl; //QUITAR PARA COMPARAR CON LOS OTROS SOLUCIONADORES
 
   solucion = inicial->clonar();
-
-  cout << "desired solution"<< endl;
+  cout << "desired solution"<< endl; //QUITAR PARA COMPARAR CON LOS OTROS SOLUCIONADORES
   solucion->m[0][0] = '1';
   solucion->m[0][1] = '2';
   solucion->m[0][2] = '3';
-  solucion->m[1][0] = '8';
-  solucion->m[1][1] = '0';
-  solucion->m[1][2] = '4';
+  solucion->m[1][0] = '4';
+  solucion->m[1][1] = '5';
+  solucion->m[1][2] = '6';
   solucion->m[2][0] = '7';
-  solucion->m[2][1] = '6';
-  solucion->m[2][2] = '5';
-  cout << solucion <<endl;
-    cout<<endl;
+  solucion->m[2][1] = '8';
+  solucion->m[2][2] = '0';
+  cout << solucion <<endl; //QUITAR PARA COMPARAR CON LOS OTROS SOLUCIONADORES
+  cout<<endl; //QUITAR PARA COMPARAR CON LOS OTROS SOLUCIONADORES
 }
 
 ProblemaEightPuzzle::~ProblemaEightPuzzle() {
@@ -43,7 +29,7 @@ ProblemaEightPuzzle::~ProblemaEightPuzzle() {
 }
 
 Estado * ProblemaEightPuzzle::getEstadoInicial(){
-   return this->inicial; //new EstadoEightPuzzle();
+   return this->inicial; 
 }
 
 int ProblemaEightPuzzle::esSolucion( Estado * estadoAComparar){
@@ -52,49 +38,53 @@ int ProblemaEightPuzzle::esSolucion( Estado * estadoAComparar){
     if(*solucion == est){
         esSolucion = 1;
     }
- cout << "esSolucion: " << esSolucion << endl;
     return esSolucion;
 }
 
 int ProblemaEightPuzzle::heuristica(Estado * estado){
-  // Se podria evaluar cantidad de valores que están fuera de posición
-   EstadoEightPuzzle * estadoC = dynamic_cast< EstadoEightPuzzle * >(estado);
-   int erroneos = 0;
-   if(estadoC) { 
-      for(int i=0; i<3 ; i++){
-        for(int j=0; j<3; j++){
-          /*
-          int goalI = estadoC->m[i][j]/3
-          int goalJ = estadoC->n[i][j]%3
+   EstadoEightPuzzle * estadoActual = dynamic_cast< EstadoEightPuzzle * >(estado);
+   int heuristica = 0;
+   int posicion = 0;
 
-          erroneos += abs(i-goalI)+abs(j-goalJ);
-
-          */
-//cout << "heuristica problema 3" << "\n";
-          if(0){
-            ++erroneos;
-          }
-        }
-      }
+   for(int f = 0; f < 3; ++f)
+   {
+     for(int c = 0; c < 3; ++c)
+     {
+        if(estadoActual->m[f][c] !=solucion->m[f][c] && estadoActual->m[f][c] != '0')
+        {
+          heuristica++;
+        } 
+        /*heuristica += distanciaManhattan(posicion, estadoActual->m[f][c]);
+       ++posicion;*/      
+     }
    }
-   return erroneos;
+   return heuristica;
+}
+
+int ProblemaEightPuzzle::distanciaManhattan(int posicionActual, int valorAEvaluar){
+  int filaActual = posicionActual / 3;
+  int colActual = posicionActual % 3;
+
+  int filaSolucion = (valorAEvaluar - 1) / 3;
+  int colSolucion = (valorAEvaluar - 1) % 3;
+
+  if((valorAEvaluar - 1) < 0){
+    filaSolucion = 2;
+    colSolucion = 2;
+  }
+  return ( (abs(filaSolucion - filaActual)) + (abs(colSolucion - colActual)));
 }
 
 
 Lista * ProblemaEightPuzzle::getSiguientes( Estado * estado){
    EstadoEightPuzzle * estadoC = dynamic_cast< EstadoEightPuzzle * >(estado);
    Lista * siguientes = new Lista();
-  //arriba (f-1)
-  // abajo (f+1)
-  // izq (c-1)
-  // derecha (c+1)
   int n = estadoC->n;
   int fila;
   int columna;
 
   for(int f = 0; f < n; ++f){
     for(int c = 0; c < n; ++c){
-//cout << "getSiguientes  problema 4" << "\n";
       if (estadoC->m[f][c] == '0'){
         fila = f;
         columna = c;
@@ -105,7 +95,7 @@ Lista * ProblemaEightPuzzle::getSiguientes( Estado * estado){
   int tempfila;
   int tempcolumna;
   if(estadoC){
-    //arriba
+    //arriba  (f-1)
     EstadoEightPuzzle * clon1 = estadoC->clonar();
     int tempfila = fila-1;
     if(tempfila >= 0){
@@ -115,7 +105,7 @@ Lista * ProblemaEightPuzzle::getSiguientes( Estado * estado){
     }
     delete clon1;
     
-    //abajo
+    //abajo (f+1)
     EstadoEightPuzzle * clon2 = estadoC->clonar();
     tempfila = fila+1;
     if(tempfila <= 2){
@@ -135,7 +125,7 @@ Lista * ProblemaEightPuzzle::getSiguientes( Estado * estado){
     }
     delete clon3;
     
-    //derecha
+    //derecha (c+1)
     EstadoEightPuzzle * clon4 = estadoC->clonar();
     tempcolumna = columna+1;
     if(tempcolumna <= 2){

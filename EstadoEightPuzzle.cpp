@@ -98,10 +98,12 @@ void EstadoEightPuzzle::llenar(){
 
 
 void EstadoEightPuzzle::llenarAleatorio(){
-  char randomizer [] = {'0','2','3','4','5','6','7','8','9'};
+  //char randomizer [] = {'1','2','3','0','4','6','7','5','8'};// tiene solucion
+  char randomizer [] = {'1','2','3','0','4','6','7','5','8'};// tiene solucion
+  //char randomizer [] = {'1','2','5','7','0','3','8','6','4'};
   srand(time(0));
   int pos = 0;
-  random_shuffle(begin(randomizer), end(randomizer));
+  //random_shuffle(begin(randomizer), end(randomizer));
 	for(int i = 0; i < n; i++){
         for(int j = 0; j < n; j++){
             m[i][j] = randomizer[pos];
