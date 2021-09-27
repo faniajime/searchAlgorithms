@@ -11,21 +11,20 @@ class NodoIDA{
     public:
         NodoIDA * padre;
         Estado * estado;
+        int nivel;
 };
 class SolucionadorIDA : public Solucionador {
    private:
     int profundidad;
-    int maxProfundidad;
-    int height;
     int minHeuristica;
     NodoIDA * final;
+    int globalFound;
 
    public:
       SolucionadorIDA();
       Solucion * solucione(Problema *);
-      Solucion * solucioneRec(Estado * estado, int profundidad, Solucion * solucion);
       int fcost(Problema * problema, Estado * estado, int nodos);
-      int buscar(NodoIDA * n, Problema * p, int profundidad);
+      int buscar(NodoIDA * n, Problema * p);
       Solucion * getSolucion(NodoIDA * n);
 };
 

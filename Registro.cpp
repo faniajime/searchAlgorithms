@@ -29,11 +29,10 @@ Registro::Registro(){
    // Registran los del miembro 1 del equipo YY del grupo XX
    // Ejemplo:
    this->add("NazaP", new Problem06051Factory() );
-
    this->add("8Puzzle", new EightPuzzleFactory() );
    this->add("Solucionador8Puzzle", new SolucionadorAnchoPrimeroFactory() );
    this->add("SolucionadorIDA", new SolucionadorIDAFactory() );
-   
+
   
    // Registran los del miembro 2 del equipo YY del grupo XX
    // ... agregar lineas aqui

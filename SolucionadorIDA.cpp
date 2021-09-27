@@ -8,84 +8,96 @@
 using namespace std;
 
 SolucionadorIDA::SolucionadorIDA(){
-    height = 0;
-    maxProfundidad = 1;
+    profundidad = 0;
+    globalFound = 0;
 }
 
 Solucion * SolucionadorIDA::solucione( Problema * problema){
-    Lista * pasos = new Lista();
     Estado* estado = problema->getEstadoInicial();
-
     NodoIDA * raiz = new NodoIDA();
     raiz->estado= estado;
     raiz->padre = NULL;
+    raiz->nivel = 0;
 
-    int profundidad = 0;
     bool resuelto = false;
-    Solucion * s;
-    Lista * solucion;
-    maxProfundidad = fcost( problema, raiz->estado, profundidad);
-    minHeuristica = 100000;
+    int recorridos = 0;
+    profundidad = fcost( problema, raiz->estado, 0);
+    cout << "Profundidad:" << profundidad << endl;
 
-    while(maxProfundidad < 1000 || !resuelto){
-        int res = buscar(raiz, problema, profundidad);
+    while(profundidad < 10000 && !resuelto){
+        int res = buscar(raiz, problema);
         if(res == 1){
-            s = getSolucion(final);
             resuelto = true;
-            //final,[] como encuentro el camino?
+            break;
         }else if(res == -1){
-            maxProfundidad = minHeuristica;
-            profundidad = 0;
-            minHeuristica =100000;
+            cout << "here" << endl;
+            cout << minHeuristica << endl;
+            profundidad = minHeuristica;
+            minHeuristica = 100000;
             //calcular nueva profundidad y vamos de nuevo
         }
-
     }
-    if(s){
-        return s;
+    if(resuelto){
+        return getSolucion(final);
     }else{
-        s =new Solucion(solucion);
-        return s;
+        cout << "No se encontro solucion" << endl;
+        return NULL;
     }
+    
+    
 }
 
-int SolucionadorIDA::buscar(NodoIDA * nodo, Problema* problema, int profundidad) {
-    if(problema->esSolucion(nodo->estado)){
+int SolucionadorIDA::buscar(NodoIDA * nodo, Problema* problema) {
+    //cout << "Mi estado:" << endl << nodo->estado << endl;
+    //cout << "Mi nivel: " << nodo->nivel << endl;
+    //cout << "Profundidad: " << nodo->nivel << endl;
+    if(problema->esSolucion(nodo->estado)== 1 ){
+        //cout << "found solucion";
+        globalFound = 1;
         final = nodo;
         return 1;
-    }else if(profundidad>maxProfundidad){
-        return -1;
+    }else if( globalFound){
+        return 1;
     }
-    else if(profundidad== maxProfundidad){
-        int costo =fcost(problema, nodo->estado, profundidad);
+    else if(nodo->nivel>=profundidad){
+        int costo = fcost(problema, nodo->estado, nodo->nivel);
         if(costo< minHeuristica){
             minHeuristica = costo;            
         }
+        return -1;
     }
-    if (nodo != NULL) {
-        Lista * hijos = new Lista();
-        profundidad+=1;
-        hijos = problema->getSiguientes(nodo->estado);
-        while(!(hijos->isEmpty())){
-            NodoIDA * n = new NodoIDA();
-            n->estado = hijos->pop_front();
-            n->padre = nodo;
-            buscar(n, problema, profundidad);
+    Lista * hijos = new Lista();
+    hijos = problema->getSiguientes(nodo->estado);
+    int temp= 0;
+    Lista::Iterador i = hijos->begin();
+    Lista::Iterador end = hijos->end();
+    for(i; i != end; ++i)
+    {
+        NodoIDA * n = new NodoIDA();
+        n->estado = *i;
+        n->padre = nodo;
+        n->nivel = nodo->nivel+1;
+        int temp = buscar(n, problema);
+        if(temp == 1){
+            break;
         }
     }
+    return temp;
 }
 
 Solucion * SolucionadorIDA::getSolucion(NodoIDA * n){
     Lista * pasos = new Lista();
+    cout << n->estado << endl;
     while(n->padre != NULL){
         pasos->push_front(n->estado);
         n = n->padre;
     }
     Solucion * s = new Solucion(pasos);
+    return s;
 }
 
 
-int SolucionadorIDA::fcost(Problema * problema, Estado * estado, int profundidad){
-    int funcion = profundidad + problema->heuristica(estado);
+int SolucionadorIDA::fcost(Problema * problema, Estado * estado, int nodos){
+    int funcion = (nodos + problema->heuristica(estado));
     return funcion;
 }
