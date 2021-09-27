@@ -16,6 +16,8 @@ class SolucionadorIDA : public Solucionador {
     int profundidad;
     int maxProfundidad;
     int height;
+    int minheuristica;
+    Nodo * final;
 
    public:
       SolucionadorIDA();

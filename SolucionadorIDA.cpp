@@ -22,35 +22,55 @@ Solucion * SolucionadorIDA::solucione( Problema * problema){
 
     int profundidad = 0;
     bool resuelto = false;
-    int nodosVisitados = 0;
+    Solucion * s;
+    Lista * solucion;
+    maxProfundidad = fcost( problema, raiz->estado, profundidad);
+    minheuristica = 100000;
 
-    maxProfundidad = fcost( problema, raiz->estado, nodosVisitados);
-
-    while(fcost < 100 || !resuelto){
+    while(maxProfundidad < 1000 || !resuelto){
         int res = buscar(raiz, problema, profundidad);
         if(res == 1){
-            //final, como encuentro el camino?
+            Lista solucion = getSolucion(final);
+            resuelto = true;
+            //final,[] como encuentro el camino?
         }else if(res == -1){
+            maxProfundidad = minheuristica;
+            profundidad = 0;
+            minheuristica =100000;
             //calcular nueva profundidad y vamos de nuevo
         }
 
     }
-
-
+    if(s){
+        return s;
+    }else{
+        s =new Solucion(solucion);
+        return s;
+    }
 }
 
 int SolucionadorIDA::buscar(Nodo * nodo, Problema* problema, int profundidad)) {
     if(problema->esSolucion(nodo->estado)){
+        final = nodo;
         return 1;
     }else if(profundidad>maxProfundidad){
         return -1;
+    }
+    else if(profundidad== maxProfundidad){
+        int costo =fcost(problema, nodo->estado, profundidad);
+        if(costo< minHeuristica){
+            minHeuristica = costo;            
+        }
     }
     if (nodo != NULL) {
         Lista * hijos = new Lista();
         profundidad+=1;
         hijos = problema->getSiguientes(nodo->estado);
         while(!hijos->isEmpty()){
-            buscar(hijos.pop_front(), problema, profundidad);
+            Nodo * n = new Nodo();
+            n->estado = hijos.pop_front();
+            n->padre = nodo;
+            buscar(n, problema, profundidad);
         }
     }
 }
@@ -68,5 +88,4 @@ Solucion * SolucionadorIDA::getSolucion(Nodo * n){
 int SolucionadorIDA::fcost(Problema * problema, Estado * estado, int profundidad){
     int funcion = profundidad + problema->heuristica(estado);
     return funcion;
-
 }
