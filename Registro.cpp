@@ -5,6 +5,7 @@
 // MIEMBRO 0
 #include "EightPuzzleFactory.h"
 #include "SolucionadorAnchoPrimeroFactory.h"
+#include "SolucionadorIDAFactory.h"
 #include "SolucionadorASTARFactory.h"
 // MIEMBRO 2
 #include "Problem06051Factory.h"
@@ -27,11 +28,10 @@ Registro::Registro(){
 
    // Registran los del miembro 1 del equipo YY del grupo XX
    // Ejemplo:
-  //this->add("NazaP", new Problem06051Factory() );
-
+   this->add("NazaP", new Problem06051Factory() );
    this->add("8Puzzle", new EightPuzzleFactory() );
-   //this->add("Solucionador8Puzzle", new SolucionadorAnchoPrimeroFactory() );
-   this->add("Solucionador8Puzzle", new SolucionadorASTARFactory() );
+   this->add("Solucionador8Puzzle", new SolucionadorAnchoPrimeroFactory() );
+   this->add("SolucionadorIDA", new SolucionadorIDAFactory() );
 
   
    // Registran los del miembro 2 del equipo YY del grupo XX

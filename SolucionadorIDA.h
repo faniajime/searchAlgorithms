@@ -7,17 +7,25 @@
 
 using namespace std;
 
-class Nodo{
-    Nodo * padre;
+class NodoIDA{
+    public:
+        NodoIDA * padre;
+        Estado * estado;
+        int nivel;
 };
 class SolucionadorIDA : public Solucionador {
    private:
     int profundidad;
+    int minHeuristica;
+    NodoIDA * final;
+    int globalFound;
 
    public:
       SolucionadorIDA();
       Solucion * solucione(Problema *);
-      Solucion * solucioneRec(Problema *);
+      int fcost(Problema * problema, Estado * estado, int nodos);
+      int buscar(NodoIDA * n, Problema * p);
+      Solucion * getSolucion(NodoIDA * n);
 };
 
 
