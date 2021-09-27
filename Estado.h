@@ -25,7 +25,6 @@ class Estado {
 
    public:
       virtual ~Estado(){};
-      virtual void actualizarCosto();
 
       virtual Estado * clonar()=0;
 
@@ -34,10 +33,6 @@ class Estado {
       virtual ostream& imprimir(ostream&)=0;
       virtual int operator==(Estado *)=0;
       virtual int operator!=(Estado *)=0;
-
-   public:
-      double costo;
-      Estado * padre;
 };
 
 

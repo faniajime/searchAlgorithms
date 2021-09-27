@@ -46,10 +46,16 @@ int ProblemaEightPuzzle::heuristica(Estado * estado){
    int heuristica = 0;
    int posicion = 0;
 
-   for(int f = 0; f < 3; ++f){
-     for(int c = 0; c < 3; ++c){
-       heuristica += distanciaManhattan(posicion, estadoActual->m[f][c]);
-       ++posicion;
+   for(int f = 0; f < 3; ++f)
+   {
+     for(int c = 0; c < 3; ++c)
+     {
+        if(estadoActual->m[f][c] !=solucion->m[f][c] && estadoActual->m[f][c] != '0')
+        {
+          heuristica++;
+        } 
+        /*heuristica += distanciaManhattan(posicion, estadoActual->m[f][c]);
+       ++posicion;*/      
      }
    }
    return heuristica;

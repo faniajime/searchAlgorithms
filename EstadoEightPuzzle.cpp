@@ -2,7 +2,6 @@
 #include <random>
 #include <time.h>
 #include <algorithm>
-#include <limits>
 #include <iostream>
 using namespace std;
 
@@ -10,11 +9,7 @@ EstadoEightPuzzle::EstadoEightPuzzle(){
   n = 3;
   pedirMemoria(n);
   llenarAleatorio();
-  gScore = 0;
-  hScore = 0;
-  fScore = numeric_limits<double>::max();
-  padre = nullptr;
-
+}
 
 EstadoEightPuzzle::~EstadoEightPuzzle(){
   if(m){
@@ -84,14 +79,7 @@ void EstadoEightPuzzle::pedirMemoria(int tamanio){
     }
   }
 }
-/*
-void EstadoEightPuzzle::actualizarCosto(){
-  if (padre) {
-    gScore = padre->gScore+1;
 
-  }
-*/
-}
 void EstadoEightPuzzle::liberarMemoria(){
 	for (int f = n-1; f >= 0; --f){
         delete[]m[f];
@@ -110,10 +98,12 @@ void EstadoEightPuzzle::llenar(){
 
 
 void EstadoEightPuzzle::llenarAleatorio(){
-  char randomizer [] = {'0','1','2','3','4','5','6','7','8'};
+  //char randomizer [] = {'1','2','3','0','4','6','7','5','8'};// tiene solucion
+  char randomizer [] = {'1','2','3','0','4','6','7','5','8'};// tiene solucion
+  //char randomizer [] = {'1','2','5','7','0','3','8','6','4'};
   srand(time(0));
   int pos = 0;
-  random_shuffle(begin(randomizer), end(randomizer));
+  //random_shuffle(begin(randomizer), end(randomizer));
 	for(int i = 0; i < n; i++){
         for(int j = 0; j < n; j++){
             m[i][j] = randomizer[pos];
