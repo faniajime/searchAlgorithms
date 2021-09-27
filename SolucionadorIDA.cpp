@@ -16,7 +16,7 @@ Solucion * SolucionadorIDA::solucione( Problema * problema){
     Lista * pasos = new Lista();
     Estado* estado = problema->getEstadoInicial();
 
-    Nodo * raiz = new Nodo();
+    NodoIDA * raiz = new NodoIDA();
     raiz->estado= estado;
     raiz->padre = NULL;
 
@@ -25,18 +25,18 @@ Solucion * SolucionadorIDA::solucione( Problema * problema){
     Solucion * s;
     Lista * solucion;
     maxProfundidad = fcost( problema, raiz->estado, profundidad);
-    minheuristica = 100000;
+    minHeuristica = 100000;
 
     while(maxProfundidad < 1000 || !resuelto){
         int res = buscar(raiz, problema, profundidad);
         if(res == 1){
-            Lista solucion = getSolucion(final);
+            s = getSolucion(final);
             resuelto = true;
             //final,[] como encuentro el camino?
         }else if(res == -1){
-            maxProfundidad = minheuristica;
+            maxProfundidad = minHeuristica;
             profundidad = 0;
-            minheuristica =100000;
+            minHeuristica =100000;
             //calcular nueva profundidad y vamos de nuevo
         }
 
@@ -49,7 +49,7 @@ Solucion * SolucionadorIDA::solucione( Problema * problema){
     }
 }
 
-int SolucionadorIDA::buscar(Nodo * nodo, Problema* problema, int profundidad)) {
+int SolucionadorIDA::buscar(NodoIDA * nodo, Problema* problema, int profundidad) {
     if(problema->esSolucion(nodo->estado)){
         final = nodo;
         return 1;
@@ -66,19 +66,19 @@ int SolucionadorIDA::buscar(Nodo * nodo, Problema* problema, int profundidad)) {
         Lista * hijos = new Lista();
         profundidad+=1;
         hijos = problema->getSiguientes(nodo->estado);
-        while(!hijos->isEmpty()){
-            Nodo * n = new Nodo();
-            n->estado = hijos.pop_front();
+        while(!(hijos->isEmpty())){
+            NodoIDA * n = new NodoIDA();
+            n->estado = hijos->pop_front();
             n->padre = nodo;
             buscar(n, problema, profundidad);
         }
     }
 }
 
-Solucion * SolucionadorIDA::getSolucion(Nodo * n){
+Solucion * SolucionadorIDA::getSolucion(NodoIDA * n){
     Lista * pasos = new Lista();
     while(n->padre != NULL){
-        pasos.push_front(n->estado);
+        pasos->push_front(n->estado);
         n = n->padre;
     }
     Solucion * s = new Solucion(pasos);
