@@ -9,7 +9,8 @@
 // Lista de estados desde el inicial hasta la solucion final
 #include "Solucion.h" 
 
-#include<iostream>
+#include <iostream>
+#include <chrono>
 using namespace std;
 
 // Compilar con:  g++ -o solucionar *.cpp
@@ -41,7 +42,10 @@ int main(int argc, char **argv){
             producto2 = fabricaDeSolucionador->producir();
             solucionador = dynamic_cast< Solucionador * > ( producto2 );
             if(problema && solucionador) {
+               auto initialTime = std::chrono::high_resolution_clock::now();
                solucion = solucionador->solucione( problema );
+               auto finishTime = std::chrono::high_resolution_clock::now();
+               chrono::duration<double> duration = finishTime - initialTime;
                cout << "Problema: " << argv[1] << endl;
                cout << "Solucinador: "<< argv[2] << endl;
                cout << "---------------------------------" << endl;
@@ -53,11 +57,13 @@ int main(int argc, char **argv){
                else {
                   cout << "NO HAY SOLUCION" << endl;
                }
+               cout << "Tiempo de procesamiento del algoritmo: " << duration.count() << 's'<<endl;
             }
             else {
                cout << "Warning: debe indicar una fabrica de problema primero luego de solucionador"<< endl;
                cout << "Uso: "<< argv[0] << " nombreProblema nombreSolucionador" << endl;
             }
+
       }
       else {
           cout << "Warning: Fábrica de Producto no registrado" << endl;
