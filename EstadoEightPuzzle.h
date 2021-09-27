@@ -14,11 +14,10 @@ class EstadoEightPuzzle : public Estado {
   */
 
    private:
-      
+      char** m;
 	    int n;
 
    public:
-      char** m;
       EstadoEightPuzzle();
       ~EstadoEightPuzzle();
       EstadoEightPuzzle * clonar();
@@ -26,10 +25,12 @@ class EstadoEightPuzzle : public Estado {
       ostream& imprimir(ostream&);
       int operator==(Estado *);
       int operator!=(Estado *);
+      void actualizarCosto();
       void pedirMemoria(int);
       void liberarMemoria();
       void llenar();
       void llenarAleatorio();
+
 };
 
 

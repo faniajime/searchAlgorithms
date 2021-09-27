@@ -2,13 +2,11 @@
 #define SOLUCIONADOR_ASTAR_FACTORY
 
 #include "Fabrica.h"
-#include "SolucionadorASTAR.h"
+#include "SOLUCIONADOR_ASTAR_FACTORY.h"
 
 class SolucionadorASTARFactory : public Fabrica {
     public:
-       SolucionadorASTAR * producir();
+       SolucionadorASTARFactory * producir();
 };
 
 #endif
-
-
