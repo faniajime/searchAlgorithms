@@ -4,6 +4,7 @@
 #include <iostream>
 #include <list>
 #include <iterator>
+#include <chrono>
 
 using namespace std;
 
@@ -19,6 +20,9 @@ class SolucionadorIDA : public Solucionador {
     int minHeuristica;
     NodoIDA * final;
     int globalFound;
+    std::chrono::steady_clock::time_point start;
+    std::chrono::steady_clock::time_point end;
+    
 
    public:
       SolucionadorIDA();

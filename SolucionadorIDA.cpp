@@ -3,6 +3,7 @@
 #include "Solucion.h"
 #include "Lista.h"
 #include "Problema.h"
+
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -13,6 +14,8 @@ SolucionadorIDA::SolucionadorIDA(){
 }
 
 Solucion * SolucionadorIDA::solucione( Problema * problema){
+    start = std::chrono::steady_clock::now();
+    bool timeDone = false;
     Estado* estado = problema->getEstadoInicial();
     NodoIDA * raiz = new NodoIDA();
     raiz->estado= estado;
@@ -22,9 +25,13 @@ Solucion * SolucionadorIDA::solucione( Problema * problema){
     bool resuelto = false;
     int recorridos = 0;
     profundidad = fcost( problema, raiz->estado, 0);
-    cout << "Profundidad:" << profundidad << endl;
+    cout << "++++++++++++++ FINDING A SOLUTION WITH IDA +++++++++++++" <<endl;
 
-    while(profundidad < 10000 && !resuelto){
+    while(!resuelto && !timeDone){
+        end = std::chrono::steady_clock::now();
+        if((std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() / 1000000.0) >  300){
+            timeDone = true;
+        }
         int res = buscar(raiz, problema);
         if(res == 1){
             resuelto = true;
@@ -36,11 +43,15 @@ Solucion * SolucionadorIDA::solucione( Problema * problema){
             minHeuristica = 100000;
             //calcular nueva profundidad y vamos de nuevo
         }
+        else if (res == -2){
+            cout << "No se encontro solucion en el tiempo dado." << endl;
+            return NULL;
+        }
     }
     if(resuelto){
         return getSolucion(final);
     }else{
-        cout << "No se encontro solucion" << endl;
+        cout << "No se encontro solucion en el tiempo dado" << endl;
         return NULL;
     }
     
@@ -52,7 +63,6 @@ int SolucionadorIDA::buscar(NodoIDA * nodo, Problema* problema) {
     //cout << "Mi nivel: " << nodo->nivel << endl;
     //cout << "Profundidad: " << nodo->nivel << endl;
     if(problema->esSolucion(nodo->estado)== 1 ){
-        //cout << "found solucion";
         globalFound = 1;
         final = nodo;
         return 1;
@@ -70,8 +80,8 @@ int SolucionadorIDA::buscar(NodoIDA * nodo, Problema* problema) {
     hijos = problema->getSiguientes(nodo->estado);
     int temp= 0;
     Lista::Iterador i = hijos->begin();
-    Lista::Iterador end = hijos->end();
-    for(i; i != end; ++i)
+    Lista::Iterador finish = hijos->end();
+    for(i; i != finish; ++i)
     {
         NodoIDA * n = new NodoIDA();
         n->estado = *i;
@@ -80,6 +90,10 @@ int SolucionadorIDA::buscar(NodoIDA * nodo, Problema* problema) {
         int temp = buscar(n, problema);
         if(temp == 1){
             break;
+        }
+        end = std::chrono::steady_clock::now();
+        if(std::chrono::duration_cast<std::chrono::seconds>(end - start).count() >  120){
+            return -2;
         }
     }
     return temp;
