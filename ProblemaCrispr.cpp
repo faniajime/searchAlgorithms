@@ -8,7 +8,13 @@ ProblemaCrispr::ProblemaCrispr(){
   srand(time(0));
   solucion = new EstadoCrispr(10);
   inicial = new EstadoCrispr(solucion->n);
-
+  /* ULTIMA ITERACION
+  char s[10] = {'A', 'T', 'G', 'C', 'C', 'G', 'A', 'C', 'G', 'A'};
+  char in[10]  =  {'T', 'C', 'A', 'G', 'G', 'A', 'C', 'G', 'A', 'C'};
+  for(int i=0; i<10; i++){
+    solucion->seq[i] = s[i];
+    inicial->seq[i] = in[i];
+  }*/
   cout << "inicial state"<< endl; //QUITAR PARA COMPARAR CON LOS OTROS SOLUCIONADORES
   cout << inicial <<endl; //QUITAR PARA COMPARAR CON LOS OTROS SOLUCIONADORES
 
