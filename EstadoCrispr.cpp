@@ -8,7 +8,7 @@ using namespace std;
 EstadoCrispr::EstadoCrispr(int len = 0){
   if(len==0){
     srand(time(0));
-    n = (rand() % (10 - 1)) + 1;
+    n = rand() % 21 + 5 ;
   }else{
     n = len;
   }
@@ -51,7 +51,7 @@ int EstadoCrispr::operator==(Estado * otroEstado){
   for(int f = 0; f < n; ++f){
     if (this->seq[f] != estado->seq[f]){
   		esIgual = 0;
-  		f=n;
+  		break;
 	}
   }
   return esIgual;
@@ -70,7 +70,7 @@ void EstadoCrispr::liberarMemoria(){
 }
 
 void EstadoCrispr::llenar(){
-    int randIndex = rand() % 4;
+  int randIndex = rand() % 4;
 	for(int i = 0; i < n; i++){
         seq[i] = possibilities[randIndex];
         randIndex = rand() % 4;

@@ -6,7 +6,7 @@ using namespace std;
 
 ProblemaCrispr::ProblemaCrispr(){
   srand(time(0));
-  solucion = new EstadoCrispr(0);
+  solucion = new EstadoCrispr(10);
   inicial = new EstadoCrispr(solucion->n);
 
   cout << "inicial state"<< endl; //QUITAR PARA COMPARAR CON LOS OTROS SOLUCIONADORES
@@ -39,12 +39,15 @@ Estado * ProblemaCrispr::getEstadoInicial(){
 
 int ProblemaCrispr::esSolucion( Estado * estadoAComparar){
     EstadoCrispr * est = dynamic_cast< EstadoCrispr * >(estadoAComparar);
-    int esSolucion = 1;
-    for(int i=0; i< solucion->n; i++){
-      if(est->seq[i]!=solucion->seq[i]){
-        esSolucion = 0;
-        break;
-      }
+    int esSolucion = 0;
+    if(*solucion == est){
+        cout<< endl <<endl;
+        cout<< "* *    *                 *            *                * " <<endl;
+        cout<< "             *              *            *             * " <<endl;
+        cout<< " CONGRATULATIONS, YOU MUTATED INTO THE TARGET SEQUENCE!  " <<endl;
+        cout<< "             *              *            *             * " <<endl;
+        cout<< "* *    *                 *            *                * " <<endl;
+        esSolucion = 1;
     }
     return esSolucion;
 }
@@ -69,14 +72,11 @@ Lista * ProblemaCrispr::getSiguientes( Estado * estado){
    int n = estadoC->n;
    bool eq = true;
    int it = 0;
-   while(eq){
-       if(estadoC->seq[it] != this->solucion->seq[it]){
-           eq = false;
-       }
-       if(it == n){
-         break;
-       }
-       it++;
+   for(int i=0; i<n; ++i){
+    if(estadoC->seq[i] != solucion->seq[i]){
+       it = i;
+       break;
+     }   
    }
    
 
