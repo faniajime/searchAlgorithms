@@ -1,9 +1,3 @@
-/**
- * Clase NazaEstado permite crear estados de tipo NazaEstado
- * 
- * @author Nazareth Rojas 
- * @version 11-07-2021
- */
 #include "NazaEstado.h"
 
 /** Constructor por omisión de la clase NazaEstado

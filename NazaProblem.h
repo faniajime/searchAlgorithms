@@ -1,9 +1,3 @@
-/**
- * Clase Problem051  
- * 
- * @author Nazareth Rojas 
- * @version 11-07-2021
- */
 
 #ifndef _NAZA_PROBLEM
 #define _NAZA_PROBLEM
@@ -17,15 +11,15 @@ using namespace std;
 #include "Estado.h"
 #include "NazaEstado.h"
 
-class Problem051 : public Problema {
+class NazaProblem : public Problema {
    private:
       NazaEstado *inicial;
       NazaEstado *solucion; //el estado final
      
 
    public:
-      Problem051();
-      ~Problem051();
+      NazaProblem();
+      ~NazaProblem();
       Estado * getEstadoInicial(); 
       int esSolucion( Estado * ); 
       int heuristica(Estado *); 
