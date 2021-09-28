@@ -1,21 +1,15 @@
-/**
- * Clase Problem051
- *
- * @author Nazareth Rojas
- * @version 11-07-2021
- */
-#include "Problem051.h"
+#include "NazaProblem.h"
 #include "Lista.h"
 #include "Problema.h"
 
 
 
-/** Constructor por omisión de la clase Problem051 
+/** Constructor por omisión de la clase NazaProblem 
 */
-Problem051::Problem051(){
+NazaProblem::NazaProblem(){
     inicial = new NazaEstado();
     solucion = inicial->clonar();
-    solucion->m[solucion->murciFila][solucion->murciCol] = '.'; //PONER ESTOS EN UN MÉTODO PARA SOLO LLAMARLO Y QUE NO QUEDE TAN FEO EL CONSTRUCTOR
+    solucion->m[solucion->murciFila][solucion->murciCol] = '.'; 
     solucion->m[solucion->rFila][solucion->rCol] = 'M';
     solucion->murciFila = solucion->rFila;
     solucion->murciCol = solucion->rCol;
@@ -24,18 +18,16 @@ Problem051::Problem051(){
 
 
 /** 
-* Destructor de la clase Problem051 
+* Destructor de la clase NazaProblem 
 */
-Problem051::~Problem051(){
-    //if(inicial){
-    //  delete [] inicial;
-    //}
+NazaProblem::~NazaProblem(){
+   
 }
 
 /** Método getEstadoInicial devuelve el Estado almacenado en el atributo inicial
  * @ return retorna el Estado inicial
  */
-Estado * Problem051::getEstadoInicial(){
+Estado * NazaProblem::getEstadoInicial(){
     return this->inicial;
 }
 
@@ -44,7 +36,7 @@ Estado * Problem051::getEstadoInicial(){
  * @ param estadoAComparar recibe un puntero al estado que se desea comparar
  * @ return esSolucion retorna 1 si el estado comparado es la solucion al problema, y 0 si no lo es
  */
-int Problem051::esSolucion( Estado * estadoAComparar){
+int NazaProblem::esSolucion( Estado * estadoAComparar){
     NazaEstado * est = dynamic_cast< NazaEstado * >(estadoAComparar);
     int esSolucion = 0;
     if(*solucion == est){
@@ -58,7 +50,7 @@ int Problem051::esSolucion( Estado * estadoAComparar){
 * @ param estado recibe el estado del que se desea conocer la heuristica
 * @ return heuristica retorna el valor de la menor heuristica calculada
 */
-int Problem051::heuristica(Estado * estado){
+int NazaProblem::heuristica(Estado * estado){
     NazaEstado * est = dynamic_cast< NazaEstado * >(estado);
     int heuristica = 1;
     int distanciaFilas = 0;
@@ -103,7 +95,7 @@ int Problem051::heuristica(Estado * estado){
 * @ param estado recibe un puntero al estado que se desea expandir
 * @ return listaSiguientes retorna la lista de los posibles estados siguientes a partir del estado que se expandió
 */
-Lista * Problem051::getSiguientes( Estado * estado){
+Lista * NazaProblem::getSiguientes( Estado * estado){
     NazaEstado * est = dynamic_cast< NazaEstado * >(estado);
     Lista * listaSiguientes = new Lista();
     if(est){

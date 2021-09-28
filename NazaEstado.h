@@ -1,10 +1,3 @@
-/**
- * Clase NazaEstado permite crear estados de tipo NazaEstado
- * 
- * @author Nazareth Rojas 
- * @version 11-07-2021
- */
-
 #ifndef _NAZA_ESTADO
 #define _NAZA_ESTADO
 #include <stdlib.h>
@@ -12,15 +5,15 @@
 #include "Estado.h"
 
 class NazaEstado : public Estado {
-  friend class Problem051;
+  friend class NazaProblem;
 
    private:
       char **m;
       int n;
-      int rFila; //para almacenar fila del refugio
-      int rCol; //almacena columna del refugio
-      int murciFila; //almacena fila del murci
-      int murciCol; //almacena columna del murci
+      int rFila; 
+      int rCol; 
+      int murciFila; 
+      int murciCol; 
 	
    public:
       NazaEstado();

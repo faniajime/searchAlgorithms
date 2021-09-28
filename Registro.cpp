@@ -7,9 +7,11 @@
 #include "SolucionadorAnchoPrimeroFactory.h"
 #include "SolucionadorIDAFactory.h"
 #include "SolucionadorASTARFactory.h"
+
+// MIEMBRO Fabiola jimenez
 #include "ProblemaCrisprFactory.h"
-// MIEMBRO 2
-#include "Problem06051Factory.h"
+// MIEMBRO Nazareth Rojas
+#include "NazaProblemFactory.h"
 // MIEMBRO Sung Jae Moon
 #include "ProblemaSungJaeFactory.h"
 
@@ -29,22 +31,29 @@ Registro::Registro(){
    // SE CREAN INSTANCIAS DE FABRICA Y SE REGISTRAN
 
    // Registran los del miembro 1 del equipo YY del grupo XX
-   // Ejemplo:
-   this->add("NazaP", new Problem06051Factory() );
+
+   //Problema base 8Puzzle
    this->add("8Puzzle", new EightPuzzleFactory() );
    this->add("Solucionador8Puzzle", new SolucionadorAnchoPrimeroFactory() );
-   this->add("SolucionadorIDA", new SolucionadorIDAFactory() );
+
+   // miembro Fabiola jimenez
    this->add("Crispr", new ProblemaCrisprFactory() );
+
+   // miembro Nazareth Rojas
+   this->add("NazaP", new NazaProblemFactory() );
 
    // miembro Sung Jae
    this->add("SungJae", new ProblemaSungJaeFactory());
+
+   // solucionador Base Ancho Primero
+   this->add("SolucionadorAnchoPrimero", new SolucionadorAnchoPrimeroFactory() );
+
    // solucionador AStar
    this->add("SolucionadorASTAR", new SolucionadorASTARFactory());
-  
-   // Registran los del miembro 2 del equipo YY del grupo XX
-   // ... agregar lineas aqui
-   // Registran los del miembro 3 del equipo YY del grupo XX
-   // ... agregar lineas aqui
+
+   // solucionador IDAStar
+   this->add("SolucionadorIDA", new SolucionadorIDAFactory() );
+   
 }
 
 Registro::~Registro(){
