@@ -6,7 +6,7 @@ using namespace std;
 ProblemaEightPuzzle::ProblemaEightPuzzle(){
   inicial = new EstadoEightPuzzle();
 
-cout << "inicial state"<< endl; //QUITAR PARA COMPARAR CON LOS OTROS SOLUCIONADORES
+  cout << "inicial state"<< endl; //QUITAR PARA COMPARAR CON LOS OTROS SOLUCIONADORES
   cout << inicial <<endl; //QUITAR PARA COMPARAR CON LOS OTROS SOLUCIONADORES
 
   solucion = inicial->clonar();

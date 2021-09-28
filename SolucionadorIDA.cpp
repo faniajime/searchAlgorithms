@@ -34,10 +34,10 @@ Solucion * SolucionadorIDA::solucione( Problema * problema){
         }
         int res = buscar(raiz, problema);
         if(res == 1){
+            cout <<"found a solution" <<endl;
             resuelto = true;
             break;
         }else if(res == -1){
-            cout << "here" << endl;
             cout << minHeuristica << endl;
             profundidad = minHeuristica;
             minHeuristica = 100000;
@@ -59,9 +59,9 @@ Solucion * SolucionadorIDA::solucione( Problema * problema){
 }
 
 int SolucionadorIDA::buscar(NodoIDA * nodo, Problema* problema) {
-    //cout << "Mi estado:" << endl << nodo->estado << endl;
-    //cout << "Mi nivel: " << nodo->nivel << endl;
-    //cout << "Profundidad: " << nodo->nivel << endl;
+    cout << "Mi estado:" << endl << nodo->estado << endl;
+    cout << "Mi nivel: " << nodo->nivel << endl;
+    cout << "Profundidad: " << nodo->nivel << endl;
     if(problema->esSolucion(nodo->estado)== 1 ){
         globalFound = 1;
         final = nodo;
@@ -89,6 +89,7 @@ int SolucionadorIDA::buscar(NodoIDA * nodo, Problema* problema) {
         n->nivel = nodo->nivel+1;
         int temp = buscar(n, problema);
         if(temp == 1){
+            cout <<"found a solution" <<endl;
             break;
         }
         end = std::chrono::steady_clock::now();
