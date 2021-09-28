@@ -9,7 +9,8 @@
 #include "SolucionadorASTARFactory.h"
 // MIEMBRO 2
 #include "Problem06051Factory.h"
-// MIEMBRO 3
+// MIEMBRO Sung Jae Moon
+#include "ProblemaSungJaeFactory.h"
 
 
 void Registro::add(const char * nombre, Fabrica * fabrica){
@@ -32,7 +33,10 @@ Registro::Registro(){
    this->add("8Puzzle", new EightPuzzleFactory() );
    this->add("Solucionador8Puzzle", new SolucionadorAnchoPrimeroFactory() );
    this->add("SolucionadorIDA", new SolucionadorIDAFactory() );
-
+   // miembro Sung Jae
+   this->add("SungJae", new ProblemaSungJaeFactory());
+   // solucionador AStar
+   this->add("SolucionadorASTAR", new SolucionadorASTARFactory());
   
    // Registran los del miembro 2 del equipo YY del grupo XX
    // ... agregar lineas aqui
